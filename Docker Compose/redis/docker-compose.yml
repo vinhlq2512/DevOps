@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: shared.redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - /home/data/redis:/data
+    command: redis-server --requirepass "admin_secret"
+    networks:
+      - shared_network
+
+networks:
+  shared_network:
+    external: true

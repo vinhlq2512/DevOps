@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  minio:
+    image: minio/minio:latest
+    container_name: shared.minio
+    restart: unless-stopped
+    ports:
+      - "9001:9000" # API port (mapped to 9001 on host to avoid conflict with portainer)
+      - "9002:9001" # Console port
+    environment:
+      MINIO_ROOT_USER: admin
+      MINIO_ROOT_PASSWORD: admin_secret
+    command: server /data --console-address ":9001"
+    volumes:
+      - /home/data/minio:/data
+    networks:
+      - shared_network
+
+networks:
+  shared_network:
+    external: true

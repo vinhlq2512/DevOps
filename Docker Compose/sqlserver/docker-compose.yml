@@ -11,8 +11,10 @@ services:
       ACCEPT_EULA: "Y"
       SA_PASSWORD: "Str0ngPa5sVvorcl"
     volumes:
-      - sqlserver-data:/var/opt/mssql
+      - /home/data/sqlserver:/var/opt/mssql
+    networks:
+      - shared_network
 
-volumes:
-  sqlserver-data:
-    driver: local
+networks:
+  shared_network:
+    external: true
