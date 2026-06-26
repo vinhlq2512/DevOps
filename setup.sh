@@ -32,7 +32,11 @@ setup_service() {
   if [ -d "$BASE_DIR/$srv" ]; then
     echo "🔄 Starting $srv..."
     cd "$BASE_DIR/$srv" || exit
-    docker-compose up -d
+    if docker compose version > /dev/null 2>&1; then
+      docker compose up -d
+    else
+      docker-compose up -d
+    fi
     cd - > /dev/null || exit
   else
     echo "❌ Error: Service '$srv' not found in '$BASE_DIR/'"
